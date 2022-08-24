@@ -11,7 +11,8 @@
     "format": "npm run prettier:fix && npm run lint:fix",
     "test": "npm run build && npm run jasmine",
     "build": "npx tsc",
-    "start": "npm run build && nodemon ./dist/index"
+    "start": "nodemon src/index.ts",
+    "jasmine": "jasmine"
   },
   "keywords": [],
   "author": "",
@@ -27,6 +28,7 @@
     "eslint": "^8.22.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "jasmine-es6-promise-matchers": "^2.1.2",
     "nodemon": "^2.0.19",
     "prettier": "^2.7.1",
     "ts-node": "^10.9.1",

@@ -1,23 +1,33 @@
 import express from 'express';
-import sharp, { OutputInfo } from 'sharp';
 import { Image } from '../../models/Image';
-import * as fs from 'fs';
-import { SYSTEM_FULL_PATH, SYSTEM_THUMB_PATH } from '../../constant';
 import imageProcessing from '../../processor';
-
+import { OutputFormat } from '../../models/Output';
 const images = express.Router();
 
 images.get('/', (req, res) => {
-  //convert query data as our modal
-  const image = req.query as unknown as Image;
+  //convert query data as our model
+  const { filename, height, width } = req.query as unknown as {
+    filename: string;
+    height: number;
+    width: number;
+  };
+  const image: Image = {
+    filename,
+    height: +height,
+    width: +width,
+  };
 
-  const result = imageProcessing(image);
-
-  if (result.isSuccess) {
-    if (result.filePath) res.sendFile(result.filePath);
-  } else {
-    res.send(result.error);
-  }
+  imageProcessing(image)
+    .then((data: OutputFormat) => {
+      if (data.isSuccess) {
+        if (data.filePath) {
+          res.sendFile(data.filePath);
+        }
+      }
+    })
+    .catch((err: OutputFormat) => {
+      res.send(err.error);
+    });
 });
 
 export default images;
