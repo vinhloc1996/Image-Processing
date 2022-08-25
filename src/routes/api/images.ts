@@ -4,7 +4,7 @@ import imageProcessing from '../../processor';
 import { OutputFormat } from '../../models/Output';
 const images = express.Router();
 
-images.get('/', (req, res) => {
+images.get('/', (req: express.Request, res: express.Response) => {
   //convert query data as our model
   const { filename, height, width } = req.query as unknown as {
     filename: string;

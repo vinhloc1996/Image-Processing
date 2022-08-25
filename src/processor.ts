@@ -1,4 +1,4 @@
-import sharp, { OutputInfo } from 'sharp';
+import sharp from 'sharp';
 import * as fs from 'fs';
 import { SYSTEM_FULL_PATH, SYSTEM_THUMB_PATH } from './constant';
 import { Image } from './models/Image';
@@ -33,6 +33,7 @@ const imageProcessing = async (image: Image): Promise<OutputFormat> => {
     `${SYSTEM_THUMB_PATH}${filename}`
   );
   //checking the file was existed on system before
+  //I suppose this is the caching you asked
   if (fs.existsSync(`${BUILT_THUMB_PATH}`)) {
     result.isSuccess = true;
     result.filePath = `${BUILT_THUMB_PATH}`;
@@ -43,7 +44,7 @@ const imageProcessing = async (image: Image): Promise<OutputFormat> => {
       return await sharp(`${BUILT_FULL_PATH}`)
         .resize(width, height)
         .toFile(`${BUILT_THUMB_PATH}`)
-        .then((info: OutputInfo) => {
+        .then(() => {
           result.isSuccess = true;
           result.filePath = `${BUILT_THUMB_PATH}`;
           return result;
