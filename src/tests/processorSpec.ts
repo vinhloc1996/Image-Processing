@@ -15,14 +15,14 @@ describe('Test the image processor', () => {
 
   const BUILT_THUMB_PATH = path.resolve(
     __dirname,
-    `../${SYSTEM_THUMB_PATH}${filename}`
+    `../${SYSTEM_THUMB_PATH}sample-100-100.jpg`
   );
 
   const BUILT_SAMPLE_PATH = path.resolve(__dirname, `../../assets/${filename}`);
 
   beforeAll(() => {
     if (!fs.existsSync(BUILT_FULL_PATH)) {
-      fs.copyFile(BUILT_SAMPLE_PATH, BUILT_THUMB_PATH, () => {
+      fs.copyFile(BUILT_SAMPLE_PATH, BUILT_FULL_PATH, () => {
         console.log('Setup sample file successfully');
       });
     }
@@ -53,7 +53,7 @@ describe('Test the image processor', () => {
     };
 
     const expectedOutput: OutputFormat = {
-      error: `No image found with name ${sampleImage.filename}. Please upload the image first!`,
+      error: `No image found with name sample1.jpg. Please upload the image first!`,
       filePath: null,
       isSuccess: false,
     };

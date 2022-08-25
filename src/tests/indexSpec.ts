@@ -21,7 +21,7 @@ describe('GET request to /api/images', function () {
 
   beforeAll(() => {
     if (!fs.existsSync(BUILT_FULL_PATH)) {
-      fs.copyFile(BUILT_SAMPLE_PATH, BUILT_THUMB_PATH, () => {
+      fs.copyFile(BUILT_SAMPLE_PATH, BUILT_FULL_PATH, () => {
         console.log('Setup sample file successfully');
       });
     }

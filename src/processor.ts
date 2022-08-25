@@ -2,6 +2,7 @@ import sharp from 'sharp';
 import * as fs from 'fs';
 import { SYSTEM_FULL_PATH, SYSTEM_THUMB_PATH } from './constant';
 import { Image } from './models/Image';
+import { File } from './models/File';
 import { OutputFormat } from './models/Output';
 import path from 'path';
 
@@ -23,6 +24,15 @@ const imageProcessing = async (image: Image): Promise<OutputFormat> => {
     return new Promise((res, rej) => rej(result));
   }
 
+  const pathInfo: path.ParsedPath = path.parse(filename);
+  const file: File = {
+    ext: pathInfo.ext,
+    name: pathInfo.name,
+  };
+
+  //built filename with height and width
+  const BUILT_FILE_NAME = `${file.name}-${height}-${width}${file.ext}`;
+
   //built path with file
   const BUILT_FULL_PATH = path.resolve(
     __dirname,
@@ -30,7 +40,7 @@ const imageProcessing = async (image: Image): Promise<OutputFormat> => {
   );
   const BUILT_THUMB_PATH = path.resolve(
     __dirname,
-    `${SYSTEM_THUMB_PATH}${filename}`
+    `${SYSTEM_THUMB_PATH}${BUILT_FILE_NAME}`
   );
   //checking the file was existed on system before
   //I suppose this is the caching you asked
